@@ -6,7 +6,7 @@
 # include "../libs/libft/ft_printf/ft_printf.h"
 # include <X11/keysym.h>
 # include <X11/X.h>
-//# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "limits.h"
 
 
