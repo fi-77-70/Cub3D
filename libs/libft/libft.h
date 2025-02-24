@@ -87,5 +87,8 @@ char		*ft_joinpath(char const *s1, char const *s2);
 size_t		ft_strclen(const char *str, const char c);
 char		*ft_strndup(const char *s, size_t n);
 char		*ft_strjoin_free(char *s1, char const *s2, bool to_free);
+char		**get_arr(int fd);
+void		free_lines(char *buf, char *stash);
+void		free_matrix(char **mtr);
 
 #endif
