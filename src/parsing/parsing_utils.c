@@ -41,11 +41,21 @@ int	image_validator(char *file, char *extension)
 		return (1);
 }
 
-int	ft_flood(char **map, int y, int x)
+void	ft_flood(char **map, int y, int x)
 {
-	if ((x == 0 && map[y][x] != '1') || (y == 0 && map[y][x] != '1'))
-		return (0);
-	if ((x == ft_strlen(map[y] && map[y][x] != '1')) || (y == ))
+	ft_putmtr(map);
+	if (y == ft_mtrlen(map) || x == (int)ft_strlen(map[y]))
+		return ;
+	if (y < 0 || x < 0)
+		return ;
+	if (map[y][x] && (map[y][x] == '1' || map[y][x] == 'F'))
+		return ;
+	if (map[y][x] && (map[y][x] == '0' || map[y][x] == ' '))
+		map[y][x] = 'F';
+	ft_flood(map, y - 1, x);
+	ft_flood(map, y, x + 1);
+	ft_flood(map, y + 1, x);
+	ft_flood(map, y, x - 1);
 }
 
 int	map_scan(char **map)
@@ -60,8 +70,7 @@ int	map_scan(char **map)
 		while (map[y][x])
 		{
 			if (map[y][x] == '0')
-				if(!ft_flood(map, y, x))
-					return (0)
+				ft_flood(map, y, x);
 			x++;
 		}
 		x = 0;
