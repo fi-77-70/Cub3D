@@ -22,6 +22,7 @@ PARSING			= parsing_utils.c
 #|_______________________________________________________________|
 
 SRC				= $(GENERAL)\
+					$(PARSING)\
 
 VPATH			= src\
 					src/parsing
