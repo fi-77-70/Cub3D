@@ -21,5 +21,39 @@ int	map_scan(char **map);
 /*auxiliary function of the map scan function wich checks the map verticaly*/
 int	map_scan_2(char ** map);
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+typedef struct s_load_img
+{
+	void	*n;
+	void	*s;
+	void	*e;
+	void	*w;
+}	t_load_img;
+
+typedef struct s_game
+{
+	char		player_dir;
+	char		*no;
+	char		*so;
+	char		*ea;
+	char		*we;
+	int			f[3];
+	int			c[3];
+	int			map_start;
+	int			map_end;
+	char		**map;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_coord		player;
+	t_load_img	li;
+}	t_game;
+
+t_game	*init(void);
+void	get_elements(t_game *game, char *path);
 
 #endif
