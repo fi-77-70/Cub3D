@@ -18,8 +18,6 @@ int	image_validator(char *file, char *extension);
 /*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
 returns 0 if the map is not surrounded and 1 if it is */
 int	map_scan(char **map);
-/*auxiliary function of the map scan function wich checks the map verticaly*/
-int	map_scan_2(char ** map);
 
 typedef struct s_coord
 {
