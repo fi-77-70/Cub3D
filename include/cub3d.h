@@ -53,5 +53,7 @@ typedef struct s_game
 
 t_game	*init(void);
 void	get_elements(t_game *game, char *path);
+char	*get_texture_path(char *line);
+char	**ft_cub_split(char const *s, char c, char x);
 
 #endif

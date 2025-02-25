@@ -15,9 +15,9 @@ MLX				= minilibx-linux/libmlx_Linux.a
 
 GENERAL			= main.c
 
-UTILS			= init.c
+UTILS			= init.c get_content_utils.c
 
-PARSING			= get_elements.c parsing_utils.c
+PARSING			= get_elements.c parsing_utils.c ft_cub_split.c
 
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
@@ -62,7 +62,7 @@ $(MLX):
 clean:
 				$(RM) $(OBJ_DIR)
 
-fclean: 		clean
+fclean: 		clean rmlx
 				$(RM) $(NAME)
 				$(RM) $(LIBFT)
 				make clean -C minilibx-linux
@@ -79,5 +79,8 @@ download:
 	@wget https://cdn.intra.42.fr/document/document/25858/minilibx-linux.tgz
 	@tar -xzf minilibx-linux.tgz
 	@rm minilibx-linux.tgz
+
+gdb:
+	gdb --tui ./$(NAME)
 
 .PHONY: 		all clean fclean re
