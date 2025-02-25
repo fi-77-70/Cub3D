@@ -32,7 +32,7 @@ void	m_matrix_2(char *stash, char **line, int a, int j)
 			{
 				j++;
 				a = 0;
-				line[j] = (char *)malloc(sizeof(char *)
+				line[j] = (char *)malloc(sizeof(char)
 						* ft_strclen(stash, '\n'));
 			}
 			if (*stash && !line[j])
