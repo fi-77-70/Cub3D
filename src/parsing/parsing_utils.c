@@ -40,3 +40,58 @@ int	image_validator(char *file, char *extension)
 	else
 		return (1);
 }
+/*auxiliary function of the map scan function wich checks the map verticaly*/
+int	map_scan_2(char ** map)
+{
+	int	x;
+	int	y;
+	int	check_bounds;
+
+	x = 0;
+	y = 0;
+	check_bounds = 1;
+	while (map[y][x])
+	{
+		while (map[y][x])
+		{
+			if (check_bounds > 0 && map[y][x] == '0')
+				return (0);
+			else if (map[y][x] == '1')
+				check_bounds = -check_bounds;
+			y++;
+		}
+		if (check_bounds > 0)
+			return (0);
+		y = 0;
+		x++;
+	}
+	return (1);
+}
+/*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
+returns 0 if the map is not surrounded and 1 if it is */
+int	map_scan(char **map)
+{
+	int	x;
+	int	y;
+	int	check_bounds;
+
+	x = 0;
+	y = 0;
+	check_bounds = 1;
+	while (map[y][x])
+	{
+		while (map[y][x])
+		{
+			if (check_bounds > 0 && map[y][x] == '0')
+				return (0);
+			else if (map[y][x] == '1')
+				check_bounds = -check_bounds;
+			x++;
+		}
+		if (check_bounds > 0)
+			return (0);
+		x = 0;
+		y++;
+	}
+	return (map_scan_2(map));
+}

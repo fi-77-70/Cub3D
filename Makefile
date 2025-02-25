@@ -15,6 +15,8 @@ MLX				= minilibx-linux/libmlx_Linux.a
 
 GENERAL			= main.c
 
+PARSING			= parsing_utils.c
+
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
 #|_______________________________________________________________|
@@ -22,6 +24,7 @@ GENERAL			= main.c
 SRC				= $(GENERAL)\
 
 VPATH			= src\
+					src/parsing
 
 OBJ_DIR			= obj
 
