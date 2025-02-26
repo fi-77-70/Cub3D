@@ -20,7 +20,8 @@ int	main(int ac, char **av)
 		printf("invalid map\n");
 	free_matrix(map);
 	return (0);
-} 
+}
+
 /*
 int	main(int argc, char **argv)
 {
