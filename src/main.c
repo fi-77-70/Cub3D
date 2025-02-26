@@ -20,7 +20,7 @@
 		printf("invalid map\n");
 	free_matrix(map);
 	return (0);
-}*/
+}  */
 
 int	main(int argc, char **argv)
 {
@@ -32,3 +32,4 @@ int	main(int argc, char **argv)
 	game = init();
 	get_elements(game, argv[1]);
 }
+

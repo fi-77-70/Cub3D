@@ -65,7 +65,6 @@ clean:
 fclean: 		clean rmlx
 				$(RM) $(NAME)
 				$(RM) $(LIBFT)
-				make clean -C minilibx-linux
 
 re: 			fclean all
 
