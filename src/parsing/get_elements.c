@@ -70,8 +70,8 @@ void	get_elements(t_game *game, char *path)
 	content = NULL;
 	content = get_file_content(path);
 	get_texture(game, content);
-	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n\n", game->no, game->so, game->we, game->ea);
+	//ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n\n", game->no, game->so, game->we, game->ea);
 	get_rgb(game, content);
-	ft_printf("F: %d, %d, %d\nC: %d, %d, %d\n\n", game->f[0], game->f[1], game->f[2], game->c[0], game->c[1], game->c[2]);
+	//ft_printf("F: %d, %d, %d\nC: %d, %d, %d\n\n", game->f[0], game->f[1], game->f[2], game->c[0], game->c[1], game->c[2]);
 	ft_putmtr(content);
 }

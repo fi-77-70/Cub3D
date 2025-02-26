@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+/* int	main(int ac, char **av)
 {
 	int		fd;
 	char	**map;
@@ -20,8 +20,8 @@ int	main(int ac, char **av)
 		printf("invalid map\n");
 	free_matrix(map);
 	return (0);
-} 
-/*
+}  */
+
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -31,4 +31,4 @@ int	main(int argc, char **argv)
 		return (ft_printf("Error\nInvalid number of arguments\n"), 1);
 	game = init();
 	get_elements(game, argv[1]);
-} */
+}
