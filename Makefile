@@ -19,17 +19,21 @@ UTILS			= init.c get_content_utils.c formating_tools.c
 
 PARSING			= get_elements.c parsing_utils.c ft_cub_split.c 
 
+GRAPHICS		= image_buffering.c
+
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
 #|_______________________________________________________________|
 
 SRC				= $(GENERAL)\
 					$(UTILS)\
-					$(PARSING)
+					$(PARSING)\
+					$(GRAPHICS)\
 
 VPATH			= src\
 					src/utils\
-					src/parsing
+					src/parsing\
+					src/graphics\
 
 OBJ_DIR			= obj
 
@@ -66,9 +70,10 @@ fclean: 		clean rmlx
 				$(RM) $(NAME)
 				$(RM) $(LIBFT)
 
-re: 			fclean all
+re: 			fclean download all
 
 rmlx:
+	make clean -C minilibx-linux
 	rm -rf minilibx-linux
 
 valgrind:

@@ -1,10 +1,14 @@
 #include "cub3d.h"
 
-/* int	main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	int		fd;
 	char	**map;
+	int		*c_color;
+	int		*f_color;
 
+	c_color = (int [3]){203, 021, 021};
+	f_color = (int [3]){195, 196, 197};
 	fd = 0;
 	if (ac != 2)
 		return (0);
@@ -18,10 +22,12 @@
 		printf("valid map\n");
 	else
 		printf("invalid map\n");
+	default_buffer(c_color, f_color);	
 	free_matrix(map);
 	return (0);
-}  */
+} 
 
+/*
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -31,5 +37,4 @@ int	main(int argc, char **argv)
 		return (ft_printf("Error\nInvalid number of arguments\n"), 1);
 	game = init();
 	get_elements(game, argv[1]);
-}
-
+} */
