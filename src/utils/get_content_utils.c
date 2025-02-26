@@ -65,8 +65,7 @@ void	get_map_utils(t_game *game, char **content, int i)
 
 	j = -1;
 	while (content[++i])
-		if (content[i][0] == '\0')
-			break ;
+		;
 	while (content[--i])
 	{
 		while (content[i][++j])

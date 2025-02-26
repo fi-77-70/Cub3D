@@ -91,12 +91,17 @@ void	get_map(t_game *game, char **content)
 void	get_elements(t_game *game, char *path)
 {
 	char	**content;
+	int		fd;
 
-	(void)game;
+	fd = 0;
+	if (!extension_validator(path, "cub"))
+	{
+		ft_printf("Error\nInvalid file extension\n");
+		exit(1);
+	}
 	content = NULL;
 	content = get_file_content(path);
 	get_texture(game, content);
 	get_rgb(game, content);
 	get_map(game, content);
-	ft_putmtr(game->map);
 }
