@@ -16,5 +16,7 @@ int	main(int ac, char **av)
 	else
 		printf("invalid map\n");
 	//free_matrix(map);
+	put_floor_ceiling(game);
+	mlx_loop(game->mlx_ptr);
 	return (0);
 }

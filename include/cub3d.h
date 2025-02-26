@@ -48,6 +48,7 @@ typedef struct s_game
 	char		**map;
 	void		*mlx_ptr;
 	void		*win_ptr;
+	t_img		bg;
 	t_coord		player;
 	t_load_img	li;
 }	t_game;
@@ -68,7 +69,6 @@ returns 0 if the map is not surrounded and 1 if it is */
 int		map_scan(char **map);
 /*function takes an array, gets it's longest line and fills all the other lines with spaces to match that length forming a rectangle*/
 char	**map_formater(char **map);
-void	put_floor_ceiling(t_img *background, int *c_color, int *f_color, void *mlx);
-void	default_buffer(int	*c_color, int *f_color);
+void	put_floor_ceiling(t_game *game);
 
 #endif
