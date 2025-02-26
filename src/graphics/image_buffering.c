@@ -1,37 +1,18 @@
 #include "cub3d.h"
 
-void	put_floor_ceiling(t_img *background, int *c_color, int *f_color, void *mlx)
+void	put_floor_ceiling(t_game *game)
 {
-	int	x;
-	int	y;
+	int	*data;
+	int	i;
 
-	(void)c_color;
-	(void)f_color;
-	y = 0;
-	while (y < 600)
+	i = -1;
+	data = (int *)game->bg.addr;
+	while (++i < 800 * 600)
 	{
-		x = 0;
-		while (x < 800)
-		{
-			if (y < 300)
-				mlx_pixel_put(mlx, background, x, y, 196);
-			else
-				mlx_pixel_put(mlx, background, x, y, 200);
-			x++;
-		}
-		y++;
+		if (i < 800 * 300)
+			data[i] = game->f[0] << 16 | game->f[1] << 8 | game->f[2];
+		else
+			data[i] = game->c[0] << 16 | game->c[1] << 8 | game->c[2];
 	}
-}
-
-void	default_buffer(int	*c_color, int *f_color)
-{
-	t_img	default_img;
-	void	*mlx;
-	void	*win;
-
-	mlx = mlx_init();
-	default_img.img = mlx_new_image(mlx, 800, 600);
-	put_floor_ceiling(&default_img, c_color, f_color, mlx);
-	win = mlx_new_window(mlx, 800, 600, "cub3d");
-	mlx_put_image_to_window(mlx, win, default_img.img, 0, 0);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
 }

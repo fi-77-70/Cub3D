@@ -2,7 +2,6 @@
 
 void	init_game(t_game *game)
 {
-	//game->player_dir = NULL;
 	game->no = NULL;
 	game->so = NULL;
 	game->we = NULL;
@@ -17,7 +16,9 @@ void	init_game(t_game *game)
 void	init_img(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
-	game->win_ptr = NULL;
+	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
+	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
+	game->win_ptr = mlx_new_window(game->mlx_ptr, 800, 600, "cub3d");
 	game->li.n = NULL;
 	game->li.s = NULL;
 	game->li.w = NULL;
