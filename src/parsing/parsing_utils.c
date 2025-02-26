@@ -41,10 +41,36 @@ int	image_validator(char *file, char *extension)
 		return (1);
 }
 
+int	check_flood(char **map)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (map[y])
+		if (map[y++][0] == 'F')
+			return (0);
+	while (map[0][x])
+		if (map[0][x++] == 'F')
+			return (0);
+	x--;
+	y--;
+	while (x >= 0)
+		if (map[y][x--] == 'F')
+			return (0);
+	while (y >= 0)
+	{
+		if (map[y][ft_strlen(map[y])] == 'F')
+			return (0);
+		y--;
+	}
+	return (1);
+}
+
 void	ft_flood(char **map, int y, int x)
 {
-	ft_putmtr(map);
-	if (y == ft_mtrlen(map) || x == (int)ft_strlen(map[y]))
+	if (y < 0 || y >= ft_mtrlen(map) || x < 0 || x >= (int)ft_strlen(map[y]))
 		return ;
 	if (y < 0 || x < 0)
 		return ;
@@ -65,6 +91,7 @@ int	map_scan(char **map)
 
 	x = 0;
 	y = 0;
+	map = map_formater(map);
 	while (map[y])
 	{
 		while (map[y][x])
@@ -76,5 +103,5 @@ int	map_scan(char **map)
 		x = 0;
 		y++;
 	}
-	return (1);
+	return(check_flood(map));
 }

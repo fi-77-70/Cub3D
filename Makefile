@@ -15,9 +15,9 @@ MLX				= minilibx-linux/libmlx_Linux.a
 
 GENERAL			= main.c
 
-UTILS			= init.c get_content_utils.c
+UTILS			= init.c get_content_utils.c formating_tools.c
 
-PARSING			= get_elements.c parsing_utils.c ft_cub_split.c
+PARSING			= get_elements.c parsing_utils.c ft_cub_split.c 
 
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
