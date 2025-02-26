@@ -70,6 +70,7 @@ int	check_flood(char **map)
 
 void	ft_flood(char **map, int y, int x)
 {
+	ft_putmtr(map);
 	if (y < 0 || y >= ft_mtrlen(map) || x < 0 || x >= (int)ft_strlen(map[y]))
 		return ;
 	if (y < 0 || x < 0)

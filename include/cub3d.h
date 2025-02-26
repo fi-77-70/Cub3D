@@ -6,20 +6,23 @@
 # include "../libs/libft/ft_printf/ft_printf.h"
 # include <X11/keysym.h>
 # include <X11/X.h>
+# include <math.h>
 # include <stdio.h>
 # include "../minilibx-linux/mlx.h"
 # include "limits.h"
 
-/*function takes two strings, name (the name of the file) and extension (the desired extension);
-it then checks if the file extension the the one given in the second parameter */
-int		extension_validator(char *name, char *extension);
-//function takes the name of a file (in this case an image) and the desiered extension and checks if it exists and can be acessed
-int		image_validator(char *file, char *extension);
-/*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
-returns 0 if the map is not surrounded and 1 if it is */
-int		map_scan(char **map);
-/*function takes an array, gets it's longest line and fills all the other lines with spaces to match that length forming a rectangle*/
-char	**map_formater(char **map);
+
+
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		llen;
+	int		endian;
+}	t_img;
+
 
 typedef struct s_coord
 {
@@ -57,5 +60,17 @@ t_game	*init(void);
 void	get_elements(t_game *game, char *path);
 char	*get_texture_path(char *line);
 char	**ft_cub_split(char const *s, char c, char x);
+/*function takes two strings, name (the name of the file) and extension (the desired extension);
+it then checks if the file extension the the one given in the second parameter */
+int		extension_validator(char *name, char *extension);
+//function takes the name of a file (in this case an image) and the desiered extension and checks if it exists and can be acessed
+int		image_validator(char *file, char *extension);
+/*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
+returns 0 if the map is not surrounded and 1 if it is */
+int		map_scan(char **map);
+/*function takes an array, gets it's longest line and fills all the other lines with spaces to match that length forming a rectangle*/
+char	**map_formater(char **map);
+void	put_floor_ceiling(t_img *background, int *c_color, int *f_color, void *mlx);
+void	default_buffer(int	*c_color, int *f_color);
 
 #endif

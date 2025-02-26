@@ -4,7 +4,11 @@ int	main(int ac, char **av)
 {
 	int		fd;
 	char	**map;
+	int		*c_color;
+	int		*f_color;
 
+	c_color = (int [3]){203, 021, 021};
+	f_color = (int [3]){195, 196, 197};
 	fd = 0;
 	if (ac != 2)
 		return (0);
@@ -18,6 +22,7 @@ int	main(int ac, char **av)
 		printf("valid map\n");
 	else
 		printf("invalid map\n");
+	default_buffer(c_color, f_color);	
 	free_matrix(map);
 	return (0);
 }
