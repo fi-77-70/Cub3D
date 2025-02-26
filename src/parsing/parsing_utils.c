@@ -91,7 +91,6 @@ int	map_scan(char **map)
 
 	x = 0;
 	y = 0;
-	map = map_formater(map);
 	while (map[y])
 	{
 		while (map[y][x])
