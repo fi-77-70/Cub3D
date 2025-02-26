@@ -17,7 +17,7 @@ GENERAL			= main.c
 
 UTILS			= init.c get_content_utils.c formating_tools.c
 
-PARSING			= get_elements.c parsing_utils.c ft_cub_split.c
+PARSING			= get_elements.c parsing_utils.c ft_cub_split.c 
 
 GRAPHICS		= image_buffering.c
 

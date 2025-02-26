@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 	default_buffer(c_color, f_color);	
 	free_matrix(map);
 	return (0);
-}
+} 
 
 /*
 int	main(int argc, char **argv)

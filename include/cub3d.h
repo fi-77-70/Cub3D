@@ -11,9 +11,6 @@
 # include "../minilibx-linux/mlx.h"
 # include "limits.h"
 
-
-
-
 typedef struct s_img
 {
 	void	*img;
@@ -22,7 +19,6 @@ typedef struct s_img
 	int		llen;
 	int		endian;
 }	t_img;
-
 
 typedef struct s_coord
 {
@@ -59,6 +55,8 @@ typedef struct s_game
 t_game	*init(void);
 void	get_elements(t_game *game, char *path);
 char	*get_texture_path(char *line);
+int		get_rgb_values(t_game *game, char *line, bool x);
+void	get_map_utils(t_game *game, char **content, int i);
 char	**ft_cub_split(char const *s, char c, char x);
 /*function takes two strings, name (the name of the file) and extension (the desired extension);
 it then checks if the file extension the the one given in the second parameter */

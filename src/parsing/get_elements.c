@@ -54,12 +54,38 @@ void	get_rgb(t_game *game, char **content)
 		while (content[i][++j])
 		{
 			if (content[i][j] == 'F' && (content[i][j + 1] && content[i][j + 1] == ' '))
-				game->no = get_texture_path(content[i] + j + 2);
+				get_rgb_values(game, content[i] + j + 2, true);
 			if (content[i][j] == 'C' && (content[i][j + 1] && content[i][j + 1] == ' '))
-				game->so = get_texture_path(content[i] + j + 2);
+				get_rgb_values(game, content[i] + j + 2, false);
 		}
 		j = -1;
 	}
+}
+
+void	get_map(t_game *game, char **content)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (content[++i])
+	{
+		while (content[i][++j])
+		{
+			if (content[i][j] != '1' && content[i][j] != '0' && content[i][j] != ' ')
+				break ;
+			if (content[i][j] == '1' || content[i][j] == '0')
+			{
+				game->map_start = i;
+				break ;
+			}
+		}
+		j = -1;
+		if (game->map_start != -1)
+			break ;
+	}
+	get_map_utils(game, content, i);
 }
 
 void	get_elements(t_game *game, char *path)
@@ -70,8 +96,7 @@ void	get_elements(t_game *game, char *path)
 	content = NULL;
 	content = get_file_content(path);
 	get_texture(game, content);
-	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n\n", game->no, game->so, game->we, game->ea);
 	get_rgb(game, content);
-	ft_printf("F: %d, %d, %d\nC: %d, %d, %d\n\n", game->f[0], game->f[1], game->f[2], game->c[0], game->c[1], game->c[2]);
-	ft_putmtr(content);
+	get_map(game, content);
+	ft_putmtr(game->map);
 }
