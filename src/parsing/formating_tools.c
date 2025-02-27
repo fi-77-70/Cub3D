@@ -63,3 +63,54 @@ char	**map_formater(char **map)
 	fill_spaces_in_arr(new_map, map, len);
 	return (new_map);
 }
+
+int	charcter_checker_map(char **map)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (map[y])
+	{
+		while (map[y][x])
+		{
+			if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != '\n' && map[y][x] != 'N'
+					&& map[y][x] != 'S' && map[y][x] != 'E'
+						&& map[y][x] != 'W' && map[y][x] != ' ')
+				return (0);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	return (1);
+}
+
+int	check_necessary_map_components(t_game *game)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	if (!game->map)
+		return (0);
+	if (!charcter_checker_map(game->map))
+		return (0);
+	if (!map_scan(game->map))
+		return (0);
+	while (game->map[y])
+	{
+		while (game->map[y][x])
+		{
+			if (game->map[y][x] == 'N' || game->map[y][x] == 'S' || game->map[y][x] == 'E'
+					|| game->map[y][x] == 'W')
+				return (game->player.x = x, game->player.y = y, 1);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	return (0);
+}

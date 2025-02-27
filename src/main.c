@@ -1,3 +1,4 @@
+
 #include "cub3d.h"
 
 int	main(int ac, char **av)
@@ -11,12 +12,13 @@ int	main(int ac, char **av)
 		return (ft_printf("Error\nInvalid number of arguments\n"), 1);
 	game = init();
 	get_elements(game, av[1]);
-	if (map_scan(game->map))
+	if (check_necessary_map_components(game))
 		printf("valid map\n");
 	else
 		printf("invalid map\n");
 	//free_matrix(map);
 	put_floor_ceiling(game);
-	mlx_loop(game->mlx_ptr);
+	game_loop(game);
+	// mlx_loop(game->mlx_ptr);
 	return (0);
 }

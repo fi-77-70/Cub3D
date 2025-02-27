@@ -14,5 +14,4 @@ void	put_floor_ceiling(t_game *game)
 		else
 			data[i] = game->c[0] << 16 | game->c[1] << 8 | game->c[2];
 	}
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
 }

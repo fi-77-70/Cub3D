@@ -21,6 +21,8 @@ PARSING			= get_elements.c parsing_utils.c ft_cub_split.c
 
 GRAPHICS		= image_buffering.c
 
+GAME			= game_loop.c
+
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
 #|_______________________________________________________________|
@@ -29,11 +31,13 @@ SRC				= $(GENERAL)\
 					$(UTILS)\
 					$(PARSING)\
 					$(GRAPHICS)\
+					$(GAME)\
 
 VPATH			= src\
 					src/utils\
 					src/parsing\
 					src/graphics\
+					src/gameLogic\
 
 OBJ_DIR			= obj
 
