@@ -66,6 +66,9 @@ int	raycast(t_game *game)
 	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
 	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
 	put_floor_ceiling(game);
+	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
+	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
+	put_floor_ceiling(game);
     while (ray->x < 800)
     {
         ray->camera_x = 2 * ray->x / 800.0 - 1;
