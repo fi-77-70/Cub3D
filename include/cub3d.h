@@ -45,9 +45,17 @@ typedef struct s_game
 	int			c[3];
 	int			map_start;
 	int			map_end;
-	char		**map;
+	int			move_forward;
+	int			move_back;
+	int			move_left;
+	int			move_right;
+	int			rotate_left;
+	int			rotate_right;
+	int			map_height;
+	int			map_width;
 	void		*mlx_ptr;
 	void		*win_ptr;
+	char		**map;
 	double		player_dir_x;
 	double		player_dir_y;
 	double		plane_x;
@@ -89,5 +97,7 @@ void	put_floor_ceiling(t_game *game);
 int		check_necessary_map_components(t_game *game);
 
 int		game_loop(t_game *game);
+
+int		get_arr_longest_line(char **arr);
 
 #endif

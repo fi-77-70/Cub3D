@@ -15,6 +15,14 @@ void	init_game(t_game *game)
 	game->player_dir_y = -1;
 	game->plane_x = 1;
 	game->plane_y = 0;
+	game->move_forward = 0;
+	game->move_back = 0;
+	game->move_left = 0;
+	game->move_right = 0;
+	game->rotate_left = 0;
+	game->rotate_right = 0;
+	game->map_height = 0;
+	game->map_width = 0;
 }
 
 void	init_img(t_game *game)

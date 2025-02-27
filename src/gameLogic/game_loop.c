@@ -72,6 +72,7 @@ int	raycast(t_game *game)
     int		map_y;
 
     x = 0;
+	put_floor_ceiling(game);
     while (x < 800)
     {
         camera_x = 2 * x / 800.0 - 1;
@@ -118,7 +119,7 @@ int	raycast(t_game *game)
                 map_y += step_y;
                 side = 1;
             }
-            if (map_x >= 0 && map_x < 37 && map_y >= 0 && map_y < 39)
+            if (map_x >= 0 && map_x < game->map_width && map_y >= 0 && map_y < game->map_height)
             {
                 if (game->map[map_y][map_x] == '1')
                 {
@@ -139,6 +140,7 @@ int	raycast(t_game *game)
         x++;
     }
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
+	mlx_destroy_image(game->mlx_ptr, game->bg.img);
 	return (0);
 }
 int	close_game(t_game *game)
@@ -147,49 +149,86 @@ int	close_game(t_game *game)
 	exit(0);
 }
 
-int	key_hook(int keycode, t_game *game)
+int	movements(t_game *game)
 {
-	put_floor_ceiling(game);
-	if (keycode == 65307)
-		close_game(game);
-	if (keycode == XK_w)
+	if (game->move_forward)
 	{
-		game->player.x += game->player_dir_x * 0.1;
-		game->player.y += game->player_dir_y * 0.1;
+		game->player.x += game->player_dir_x * 0.01;
+		game->player.y += game->player_dir_y * 0.01;
 	}
-	if (keycode == XK_s)
+	if (game->move_back)
 	{
-		game->player.x -= game->player_dir_x * 0.1;
-		game->player.y -= game->player_dir_y * 0.1;
+		game->player.x -= game->player_dir_x * 0.01;
+		game->player.y -= game->player_dir_y * 0.01;
 	}
-	if (keycode == XK_a)
+	if (game->move_left)
 	{
-		game->player.x += game->player_dir_y * 0.1;
-		game->player.y -= game->player_dir_x * 0.1;
+		game->player.x += game->player_dir_y * 0.01;
+		game->player.y -= game->player_dir_x * 0.01;
 	}
-	if (keycode == XK_d)
+	if (game->move_right)
 	{
-		game->player.x -= game->player_dir_y * 0.1;
-		game->player.y += game->player_dir_x * 0.1;
+		game->player.x -= game->player_dir_y * 0.01;
+		game->player.y += game->player_dir_x * 0.01;
 	}
-	if (keycode == XK_Left)
-		rotate_player(game, -0.1);
-	if (keycode == XK_Right)
-		rotate_player(game, 0.1);
-	printf("Player position: x = %f, y = %f\n", game->player.x, game->player.y);
-	printf("Player direction: x = %f, y = %f\n", game->player_dir_x, game->player_dir_y);
-
+	if (game->rotate_left)
+		rotate_player(game, -0.01);
+	if (game->rotate_right)
+		rotate_player(game, 0.01);
 	return (0);
 }
 
+int	key_hook_press(int keycode, t_game 	*game)
+{
+	if (keycode == 65307)
+		close_game(game);
+	if (keycode == XK_w)
+		game->move_forward = 1;
+	if (keycode == XK_s)
+		game->move_back = 1;
+	if (keycode == XK_a)
+		game->move_left = 1;
+	if (keycode == XK_d)
+		game->move_right = 1;
+	if (keycode == XK_Left)
+		game->rotate_left = 1;
+	if (keycode == XK_Right)
+		game->rotate_right = 1;
+	return (0);
+}
+
+int	key_hook_release(int keycode, t_game *game)
+{
+	if (keycode == XK_w && game->move_forward)
+		game->move_forward = 0;
+	if (keycode == XK_s && game->move_back)
+		game->move_back = 0;
+	if (keycode == XK_a && game->move_left)
+		game->move_left = 0;
+	if (keycode == XK_d && game->move_right)
+		game->move_right = 0;
+	if (keycode == XK_Left && game->rotate_left)
+		game->rotate_left = 0;
+	if (keycode == XK_Right && game->rotate_right)
+		game->rotate_right = 0;
+	return (0);
+}
+
+int	function_caller(t_game *game)
+{
+	movements(game);
+	raycast(game);
+	return (0);
+}
 
 int	game_loop(t_game *game)
 {
-	put_floor_ceiling(game);
-	raycast(game);
-	mlx_key_hook(game->win_ptr, &key_hook, game);
+	// put_floor_ceiling(game);
+	mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
 	mlx_hook(game->win_ptr, 17, 0, close_game, game);
-	mlx_loop_hook(game->mlx_ptr, &raycast, game);
+	mlx_loop_hook(game->mlx_ptr, &function_caller, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_hook_press, game);
+	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, key_hook_release, game);
 	mlx_loop(game->mlx_ptr);
 	return (0);
 }
