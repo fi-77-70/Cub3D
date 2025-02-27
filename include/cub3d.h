@@ -66,6 +66,25 @@ typedef struct s_game
 	t_load_img	li;
 }	t_game;
 
+typedef struct s_ray
+{
+	int		x;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		map_x;
+	int		map_y;
+}	t_ray;
+
 t_game	*init(void);
 
 void	get_elements(t_game *game, char *path);

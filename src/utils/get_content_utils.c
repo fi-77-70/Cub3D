@@ -3,15 +3,19 @@
 char	*get_texture_path(char *line)
 {
 	int		i;
+	int		j;
 	char	*path;
 	
 	i = 0;
+	j = 0;
 	path = NULL;
 	while (line[i] && line[i] == ' ')
 		i++;
 	if (i == (int)ft_strlen(line))
 		return (ft_printf("Error\nInvalid texture path\n"), NULL);
-	path = ft_strdup(line + i);
+	while (line[i + j] && line[i + j] != ' ' && line[i + j] != '\n')
+		j++;
+	path = ft_substr(line, i, j);
 	return (path);
 }
 

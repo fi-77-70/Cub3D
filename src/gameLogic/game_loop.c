@@ -8,7 +8,7 @@ void my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void draw_line(t_game *game, t_img *frame, int x, int side, double perp_wall_dist)
+void draw_line(t_game *game, t_img *frame, t_ray *ray)
 {
     int		y;
     int		line_height;
@@ -18,7 +18,7 @@ void draw_line(t_game *game, t_img *frame, int x, int side, double perp_wall_dis
 
 	(void)game;
     // Calculate line height based on perpendicular wall distance
-    line_height = (int)(600 / perp_wall_dist);
+    line_height = (int)(600 / ray->perp_wall_dist);
     // Calculate lowest and highest pixel to fill in current stripe
     draw_start = -line_height / 2 + 600 / 2;
     if (draw_start < 0)
@@ -32,11 +32,15 @@ void draw_line(t_game *game, t_img *frame, int x, int side, double perp_wall_dis
     y = draw_start;
     while (y < draw_end)
     {
-        if (side == 0)
-            color = 0xFF0000; // Red color for walls hit on x-axis
-        else
-            color = 0x00FF00; // Green color for walls hit on y-axis
-        my_mlx_pixel_put(frame, x, y, color);
+        if (ray->side == 0 && ray->ray_dir_x > 0)
+            color = 0xFF0000; // Red color for walls ray->hit on x-axis
+        else if (ray->side == 1 && ray->ray_dir_y < 0)
+            color = 0x00FF00; // Green color for walls ray->hit on y-axis
+		else if (ray->side == 0 && ray->ray_dir_x < 0)
+			color = 0x0000FF;
+		else
+			color = 0xFFFF00;
+        my_mlx_pixel_put(frame, ray->x, y, color);
         y++;
     }
 }
@@ -55,89 +59,75 @@ void rotate_player(t_game *game, double angle)
 
 int	raycast(t_game *game)
 {
-    int		x;
-    double	camera_x;
-    double	ray_dir_x;
-    double	ray_dir_y;
-    double	side_dist_x;
-    double	side_dist_y;
-    double	delta_dist_x;
-    double	delta_dist_y;
-    double	perp_wall_dist;
-    int		step_x;
-    int		step_y;
-    int		hit;
-    int		side;
-    int		map_x;
-    int		map_y;
+    t_ray	*ray;
 
-    x = 0;
-	put_floor_ceiling(game);
-    while (x < 800)
+    ray = malloc(sizeof(t_ray));
+	ray->x = 0;
+    while (ray->x < 800)
     {
-        camera_x = 2 * x / 800.0 - 1;
-        ray_dir_x = game->player_dir_x + game->plane_x * camera_x;
-        ray_dir_y = game->player_dir_y + game->plane_y * camera_x;
-        map_x = (int)game->player.x;
-        map_y = (int)game->player.y;
-        side_dist_x = 0;
-        side_dist_y = 0;
-        delta_dist_x = fabs(1 / ray_dir_x);
-        delta_dist_y = fabs(1 / ray_dir_y);
-        hit = 0;
-        if (ray_dir_x < 0)
+        ray->camera_x = 2 * ray->x / 800.0 - 1;
+        ray->ray_dir_x = game->player_dir_x + game->plane_x * ray->camera_x;
+        ray->ray_dir_y = game->player_dir_y + game->plane_y * ray->camera_x;
+        ray->map_x = (int)game->player.x;
+        ray->map_y = (int)game->player.y;
+        ray->side_dist_x = 0;
+        ray->side_dist_y = 0;
+        ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+        ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+        ray->hit = 0;
+        if (ray->ray_dir_x < 0)
         {
-            step_x = -1;
-            side_dist_x = (game->player.x - map_x) * delta_dist_x;
+            ray->step_x = -1;
+            ray->side_dist_x = (game->player.x - ray->map_x) * ray->delta_dist_x;
         }
         else
         {
-            step_x = 1;
-            side_dist_x = (map_x + 1.0 - game->player.x) * delta_dist_x;
+            ray->step_x = 1;
+            ray->side_dist_x = (ray->map_x + 1.0 - game->player.x) * ray->delta_dist_x;
         }
-        if (ray_dir_y < 0)
+        if (ray->ray_dir_y < 0)
         {
-            step_y = -1;
-            side_dist_y = (game->player.y - map_y) * delta_dist_y;
+            ray->step_y = -1;
+            ray->side_dist_y = (game->player.y - ray->map_y) * ray->delta_dist_y;
         }
         else
         {
-            step_y = 1;
-            side_dist_y = (map_y + 1.0 - game->player.y) * delta_dist_y;
+            ray->step_y = 1;
+            ray->side_dist_y = (ray->map_y + 1.0 - game->player.y) * ray->delta_dist_y;
         }
-        while (!hit)
+        while (!ray->hit)
         {
-            if (side_dist_x < side_dist_y)
+            if (ray->side_dist_x < ray->side_dist_y)
             {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0;
+                ray->side_dist_x += ray->delta_dist_x;
+                ray->map_x += ray->step_x;
+                ray->side = 0;
             }
             else
             {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1;
+                ray->side_dist_y += ray->delta_dist_y;
+                ray->map_y += ray->step_y;
+                ray->side = 1;
             }
-            if (map_x >= 0 && map_x < game->map_width && map_y >= 0 && map_y < game->map_height)
+            if (ray->map_x >= 0 && ray->map_x < 37 && ray->map_y >= 0 && ray->map_y < 39)
             {
-                if (game->map[map_y][map_x] == '1')
+                if (game->map[ray->map_y][ray->map_x] == '1')
                 {
-                    hit = 1;
+                    ray->hit = 1;
                 }
             }
             else
             {
-                hit = 1; // Stop the loop if out of bounds
+                ray->hit = 1; // Stop the loop if out of bounds
             }
         }
-        if (side == 0)
-            perp_wall_dist = (map_x - game->player.x + (1 - step_x) / 2) / ray_dir_x;
+        if (ray->side == 0)
+            ray->perp_wall_dist = (ray->map_x - game->player.x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
         else
-            perp_wall_dist = (map_y - game->player.y + (1 - step_y) / 2) / ray_dir_y;
+            ray->perp_wall_dist = (ray->map_y - game->player.y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
         // Draw the line for the current stripe
-        draw_line(game, &game->bg, x, side, perp_wall_dist);
-        x++;
+        draw_line(game, &game->bg, ray);
+        ray->x += 1;
     }
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
 	mlx_destroy_image(game->mlx_ptr, game->bg.img);
