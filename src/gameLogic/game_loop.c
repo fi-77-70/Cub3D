@@ -154,29 +154,29 @@ int	key_hook(int keycode, t_game *game)
 		close_game(game);
 	if (keycode == XK_w)
 	{
-		game->player.x += game->player_dir_x * 0.1;
-		game->player.y += game->player_dir_y * 0.1;
+		game->player.x += game->player_dir_x * 1;
+		game->player.y += game->player_dir_y * 1;
 	}
 	if (keycode == XK_s)
 	{
-		game->player.x -= game->player_dir_x * 0.1;
-		game->player.y -= game->player_dir_y * 0.1;
+		game->player.x -= game->player_dir_x * 1;
+		game->player.y -= game->player_dir_y * 1;
 	}
 	if (keycode == XK_a)
 	{
-		game->player.x += game->player_dir_y * 0.1;
-		game->player.y -= game->player_dir_x * 0.1;
+		game->player.x += game->player_dir_y * 1;
+		game->player.y -= game->player_dir_x * 1;
 	}
 	if (keycode == XK_d)
 	{
-		game->player.x -= game->player_dir_y * 0.1;
-		game->player.y += game->player_dir_x * 0.1;
+		game->player.x -= game->player_dir_y * 1;
+		game->player.y += game->player_dir_x * 1;
 	}
 	if (keycode == XK_Left)
 		rotate_player(game, -0.1);
 	if (keycode == XK_Right)
 		rotate_player(game, 0.1);
-	printf("Player position: x = %d, y = %d\n", game->player.x, game->player.y);
+	printf("Player position: x = %f, y = %f\n", game->player.x, game->player.y);
 	printf("Player direction: x = %f, y = %f\n", game->player_dir_x, game->player_dir_y);
 
 	return (0);
