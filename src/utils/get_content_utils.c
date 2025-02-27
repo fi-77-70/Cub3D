@@ -60,6 +60,8 @@ void	make_map(t_game *game, char **content)
 		game->map[++j] = ft_strdup(content[i]);
 	game->map[++j] = NULL;
 	game->map = map_formater(game->map);
+	game->map_height = ft_mtrlen(game->map);
+	game->map_width = get_arr_longest_line(game->map);
 	free_matrix(content);
 }
 

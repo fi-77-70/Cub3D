@@ -6,6 +6,8 @@ void	put_floor_ceiling(t_game *game)
 	int	i;
 
 	i = -1;
+	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
+	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
 	data = (int *)game->bg.addr;
 	while (++i < 800 * 600)
 	{
