@@ -224,7 +224,7 @@ int	function_caller(t_game *game)
 int	game_loop(t_game *game)
 {
 	// put_floor_ceiling(game);
-	mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
+	// mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
 	mlx_hook(game->win_ptr, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx_ptr, &function_caller, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_hook_press, game);
