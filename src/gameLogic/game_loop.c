@@ -61,8 +61,9 @@ int	raycast(t_game *game)
 {
     t_ray	*ray;
 
-    ray = malloc(sizeof(t_ray));
+	ray = malloc(sizeof(t_ray));
 	ray->x = 0;
+	put_floor_ceiling(game);
     while (ray->x < 800)
     {
         ray->camera_x = 2 * ray->x / 800.0 - 1;
@@ -129,6 +130,7 @@ int	raycast(t_game *game)
         draw_line(game, &game->bg, ray);
         ray->x += 1;
     }
+	free(ray);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
 	return (0);
 }
