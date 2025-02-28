@@ -140,12 +140,22 @@ int	raycast(t_game *game)
         x++;
     }
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
-	mlx_destroy_image(game->mlx_ptr, game->bg.img);
 	return (0);
 }
 int	close_game(t_game *game)
 {
+	mlx_loop_end(game->mlx_ptr);
+    free_matrix(game->map);
+	free(game->ea);
+	free(game->no);
+	free(game->so);
+	free(game->we);
+    mlx_destroy_image(game->mlx_ptr, game->bg.img);
+	mlx_clear_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+    mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
+    free(game);
 	exit(0);
 }
 

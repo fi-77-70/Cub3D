@@ -8,6 +8,7 @@ int	main(int ac, char **av)
 
 	game = NULL;
 	fd = 0;
+  (void)fd;
 	if (ac != 2)
 		return (ft_printf("Error\nInvalid number of arguments\n"), 1);
 	game = init();
