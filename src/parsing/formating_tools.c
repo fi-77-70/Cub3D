@@ -61,6 +61,7 @@ char	**map_formater(char **map)
 		new_map[i++] = (char *)malloc(sizeof(char) * (len + 1));
 	new_map[height] = NULL;
 	fill_spaces_in_arr(new_map, map, len);
+	free_matrix(map);
 	return (new_map);
 }
 

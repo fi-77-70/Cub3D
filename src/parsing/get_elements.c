@@ -6,6 +6,7 @@ char **get_file_content(char *path)
 	char	**content;
 	int		i;
 
+	(void)i;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
@@ -93,6 +94,7 @@ void	get_elements(t_game *game, char *path)
 	char	**content;
 	int		fd;
 
+	(void)fd;
 	fd = 0;
 	if (!extension_validator(path, "cub"))
 	{
