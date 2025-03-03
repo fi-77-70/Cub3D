@@ -61,7 +61,7 @@ int	raycast(t_game *game)
 {
     t_ray	*ray;
 
-    ray = malloc(sizeof(t_ray));
+	ray = malloc(sizeof(t_ray));
 	ray->x = 0;
 	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
 	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
@@ -132,13 +132,24 @@ int	raycast(t_game *game)
         draw_line(game, &game->bg, ray);
         ray->x += 1;
     }
+	free(ray);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
-	mlx_destroy_image(game->mlx_ptr, game->bg.img);
 	return (0);
 }
 int	close_game(t_game *game)
 {
+	mlx_loop_end(game->mlx_ptr);
+    free_matrix(game->map);
+	free(game->ea);
+	free(game->no);
+	free(game->so);
+	free(game->we);
+    mlx_destroy_image(game->mlx_ptr, game->bg.img);
+	mlx_clear_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+    mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
+    free(game);
 	exit(0);
 }
 
@@ -217,7 +228,7 @@ int	function_caller(t_game *game)
 int	game_loop(t_game *game)
 {
 	// put_floor_ceiling(game);
-	mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
+	// mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
 	mlx_hook(game->win_ptr, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx_ptr, &function_caller, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, key_hook_press, game);
