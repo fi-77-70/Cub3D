@@ -17,6 +17,7 @@ int	main(int ac, char **av)
 		printf("valid map\n");
 	else
 		printf("invalid map\n");
+	init_textures(game);
 	//free_matrix(map);
 	game_loop(game);
 	// mlx_loop(game->mlx_ptr);

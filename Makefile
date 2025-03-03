@@ -15,13 +15,16 @@ MLX				= minilibx-linux/libmlx_Linux.a
 
 GENERAL			= main.c
 
-UTILS			= init.c get_content_utils.c formating_tools.c
+UTILS			= init.c get_content_utils.c formating_tools.c free.c
 
-PARSING			= get_elements.c parsing_utils.c ft_cub_split.c 
+PARSING			= get_elements.c parsing_utils.c ft_cub_split.c \
+					validate_img.c
 
-GRAPHICS		= image_buffering.c
+GRAPHICS		= image_buffering.c render.c
 
 GAME			= game_loop.c
+
+ERROR			= error.c
 
 # _______________________________________________________________
 #|___________________________[SRC FILES]_________________________|
@@ -32,12 +35,14 @@ SRC				= $(GENERAL)\
 					$(PARSING)\
 					$(GRAPHICS)\
 					$(GAME)\
+					$(ERROR)\
 
 VPATH			= src\
 					src/utils\
 					src/parsing\
 					src/graphics\
 					src/gameLogic\
+					src/error\
 
 OBJ_DIR			= obj
 

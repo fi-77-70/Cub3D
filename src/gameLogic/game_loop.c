@@ -8,6 +8,12 @@ void my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	get_color(t_game *game, int x, int y, int i)
+{
+	return (*(int *)(game->img[i].addr
+		+ (y * game->img[i].llen + x * (game->img[i].bpp / 8))));
+}
+
 void draw_line(t_game *game, t_img *frame, t_ray *ray)
 {
     int		y;
@@ -33,13 +39,13 @@ void draw_line(t_game *game, t_img *frame, t_ray *ray)
     while (y < draw_end)
     {
         if (ray->side == 0 && ray->ray_dir_x > 0)
-            color = 0xFF0000; // Red color for walls ray->hit on x-axis
+            color = get_color(game, ray->x, y, NORTH);
         else if (ray->side == 1 && ray->ray_dir_y < 0)
-            color = 0x00FF00; // Green color for walls ray->hit on y-axis
+            color = get_color(game, ray->x, y, SOUTH);
 		else if (ray->side == 0 && ray->ray_dir_x < 0)
-			color = 0x0000FF;
+			color = get_color(game, ray->x, y, EAST);
 		else
-			color = 0xFFFF00;
+			color = get_color(game, ray->x, y, WEST);
         my_mlx_pixel_put(frame, ray->x, y, color);
         y++;
     }
@@ -63,8 +69,6 @@ int	raycast(t_game *game)
 
 	ray = malloc(sizeof(t_ray));
 	ray->x = 0;
-	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
-	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
 	put_floor_ceiling(game);
     while (ray->x < 800)
     {
@@ -136,6 +140,7 @@ int	raycast(t_game *game)
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->bg.img, 0, 0);
 	return (0);
 }
+
 int	close_game(t_game *game)
 {
 	mlx_loop_end(game->mlx_ptr);
