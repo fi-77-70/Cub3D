@@ -55,6 +55,7 @@ typedef struct s_game
 	int			rotate_right;
 	int			map_height;
 	int			map_width;
+	int			player_count;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	char		**map;
@@ -100,8 +101,9 @@ void	init_textures(t_game *game);
 void	init_ray(t_ray *ray, t_game *game);
 
 void	get_elements(t_game *game, char *path);
+int		check_char(t_game *game);
 
-char	*get_texture_path(char *line);
+char	*get_texture_path(char *line, t_game *game);
 
 int		get_rgb_values(t_game *game, char *line, bool x);
 
@@ -114,7 +116,7 @@ it then checks if the file extension the the one given in the second parameter *
 int		extension_validator(char *name, char *extension);
 
 //function takes the name of a file (in this case an image) and the desiered extension and checks if it exists and can be acessed
-int		image_validator(char *file, char *extension);
+int		image_validator(t_game *game, char *extension);
 
 /*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
 returns 0 if the map is not surrounded and 1 if it is */
@@ -131,8 +133,7 @@ int		game_loop(t_game *game);
 
 int		get_arr_longest_line(char **arr);
 
-void	free_images(t_game *game);
-int		ft_exit(t_game *game);
+int		ft_exit(t_game *game, char **content);
 int		close_game(t_game *game);
 
 void	missing_img_file(t_game *game);

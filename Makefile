@@ -61,7 +61,8 @@ $(OBJ_DIR)/%.o: %.c
 				@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(NAME):		$(OBJ_DIR) $(OBJ) $(MLX) $(LIBFT)
-				$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLXFLAGS) -o $(NAME) -fsanitize=address
+				$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLXFLAGS) -o $(NAME) 
+#-fsanitize=address
 
 $(LIBFT):		libs/libft/*.c
 				make -C libs/libft

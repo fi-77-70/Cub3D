@@ -15,32 +15,26 @@ void	free_map(t_game *game)
 	free(game->map);
 }
 
-void	free_all(t_game *game)
+int	ft_exit(t_game *game, char **content)
 {
-	if (!game)
-		return ;
+	if (content)
+		free_matrix(content);
+	mlx_loop_end(game->mlx_ptr);
+	if (game->ea)
+		free(game->ea);
+	if (game->no)
+		free(game->no);
+	if (game->so)
+		free(game->so);
+	if (game->we)
+		free(game->we);
 	if (game->map)
 		free_map(game);
-	if (game->win_ptr)
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	if (game->mlx_ptr)
-	{
-		mlx_destroy_display(game->mlx_ptr);
-		free(game->mlx_ptr);
-	}
-	free(game);
-}
-
-void	free_images(t_game *game)
-{
-	mlx_destroy_image(game->mlx_ptr, game->img[0].img);
-	mlx_destroy_image(game->mlx_ptr, game->img[1].img);
-	mlx_destroy_image(game->mlx_ptr, game->img[2].img);
-	mlx_destroy_image(game->mlx_ptr, game->img[3].img);
-}
-
-int	ft_exit(t_game *game)
-{
-	free_all(game);
+    mlx_destroy_image(game->mlx_ptr, game->bg.img);
+	mlx_clear_window(game->mlx_ptr, game->win_ptr);
+	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+    mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
+    free(game);
 	exit (EXIT_SUCCESS);
 }
