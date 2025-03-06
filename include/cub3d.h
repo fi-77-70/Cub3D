@@ -17,6 +17,9 @@
 # define EAST 2
 # define WEST 3
 
+# define S_WIDTH 1920
+# define S_HEIGHT 945
+
 typedef struct s_img
 {
 	void	*img;

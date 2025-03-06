@@ -28,9 +28,9 @@ void	init_game(t_game *game)
 void	init_img(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
-	game->bg.img = mlx_new_image(game->mlx_ptr, 1920, 945);
+	game->bg.img = mlx_new_image(game->mlx_ptr, S_WIDTH, S_HEIGHT);
 	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, 1920, 945, "cub3d");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, S_WIDTH, S_HEIGHT, "cub3d");
 }
 
 t_game	*init(void)
@@ -47,7 +47,7 @@ t_game	*init(void)
 
 void	init_ray(t_ray *ray, t_game *game)
 {
-	ray->camera_x = 2 * ray->x / 1920.0 - 1;
+	ray->camera_x = 2 * ray->x / (double)S_WIDTH - 1;
 	ray->ray_dir_x = game->player_dir_x + game->plane_x * ray->camera_x;
 	ray->ray_dir_y = game->player_dir_y + game->plane_y * ray->camera_x;
 	ray->map_x = (int)game->player.x;
@@ -56,6 +56,17 @@ void	init_ray(t_ray *ray, t_game *game)
 	ray->side_dist_y = 0;
 	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
 	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	// printf("ray->camera_x: %f\n", ray->camera_x);
+	// printf("game->player_dir_x: %f\n", game->player_dir_x);
+	// printf("game->player_dir_y: %f\n", game->player_dir_y);
+	// printf("game->plane_x: %f\n", game->plane_x);
+	// printf("game->plane_y: %f\n", game->plane_y);
+	// printf("ray->delta_dist_x: %f\n", ray->delta_dist_x);
+	// printf("ray->delta_dist_y: %f\n", ray->delta_dist_y);
+	// printf("game->player.x: %f\n", game->player.x);
+	// printf("game->player.y: %f\n", game->player.y);
+	// printf("ray->ray_dir_x: %f\n", ray->ray_dir_x);
+	// printf("ray->ray_dir_y: %f\n", ray->ray_dir_y);
 	ray->perp_wall_dist = 0;
 	ray->hit = 0;
 	ray->wall_x = 0;

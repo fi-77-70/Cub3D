@@ -61,7 +61,7 @@ $(OBJ_DIR)/%.o: %.c
 				@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(NAME):		$(OBJ_DIR) $(OBJ) $(MLX) $(LIBFT)
-				$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLXFLAGS) -o $(NAME)
+				$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLXFLAGS) -o $(NAME) -fsanitize=address
 
 $(LIBFT):		libs/libft/*.c
 				make -C libs/libft
@@ -89,7 +89,7 @@ valgrind:
 	valgrind --leak-check=full -s --show-leak-kinds=all ./$(NAME)
 
 download:
-	@wget https://cdn.intra.42.fr/document/document/25858/minilibx-linux.tgz
+	@wget https://cdn.intra.42.fr/document/document/31395/minilibx-linux.tgz
 	@tar -xzf minilibx-linux.tgz
 	@rm minilibx-linux.tgz
 
