@@ -12,6 +12,14 @@
 # include "../minilibx-linux/mlx.h"
 # include "limits.h"
 
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
+
+# define S_WIDTH 1920
+# define S_HEIGHT 945
+
 typedef struct s_img
 {
 	void	*img;
@@ -19,6 +27,8 @@ typedef struct s_img
 	int		bpp;
 	int		llen;
 	int		endian;
+	int		width;
+	int		height;
 }	t_img;
 
 typedef struct s_coord
@@ -26,14 +36,6 @@ typedef struct s_coord
 	double	x;
 	double	y;
 }	t_coord;
-
-typedef struct s_load_img
-{
-	void	*n;
-	void	*s;
-	void	*e;
-	void	*w;
-}	t_load_img;
 
 typedef struct s_game
 {
@@ -63,7 +65,7 @@ typedef struct s_game
 	t_img		bg;
 	t_img		frame;
 	t_coord		player;
-	t_load_img	li;
+	t_img		img[4];
 }	t_game;
 
 typedef struct s_ray
@@ -77,6 +79,12 @@ typedef struct s_ray
 	double	delta_dist_x;
 	double	delta_dist_y;
 	double	perp_wall_dist;
+	double	wall_x;
+	double	wall_y;
+	double	tex_x;
+	double	tex_y;
+	double	step;
+	double	tex_pos;
 	int		step_x;
 	int		step_y;
 	int		hit;
@@ -86,6 +94,10 @@ typedef struct s_ray
 }	t_ray;
 
 t_game	*init(void);
+
+void	init_img(t_game *game);
+void	init_textures(t_game *game);
+void	init_ray(t_ray *ray, t_game *game);
 
 void	get_elements(t_game *game, char *path);
 
@@ -118,5 +130,15 @@ int		check_necessary_map_components(t_game *game);
 int		game_loop(t_game *game);
 
 int		get_arr_longest_line(char **arr);
+
+void	free_images(t_game *game);
+int		ft_exit(t_game *game);
+int		close_game(t_game *game);
+
+void	missing_img_file(t_game *game);
+
+void	check_img_files(t_game *game);
+
+
 
 #endif

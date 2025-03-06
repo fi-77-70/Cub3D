@@ -106,4 +106,5 @@ void	get_elements(t_game *game, char *path)
 	get_texture(game, content);
 	get_rgb(game, content);
 	get_map(game, content);
+	check_img_files(game);
 }

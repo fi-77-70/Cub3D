@@ -7,9 +7,9 @@ void	put_floor_ceiling(t_game *game)
 
 	i = -1;
 	data = (int *)game->bg.addr;
-	while (++i < 800 * 600)
+	while (++i < S_WIDTH * S_HEIGHT)
 	{
-		if (i < 800 * 300)
+		if (i < S_WIDTH * (S_HEIGHT / 2))
 			data[i] = game->f[0] << 16 | game->f[1] << 8 | game->f[2];
 		else
 			data[i] = game->c[0] << 16 | game->c[1] << 8 | game->c[2];
