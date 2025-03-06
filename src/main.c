@@ -13,13 +13,9 @@ int	main(int ac, char **av)
 		return (ft_printf("Error\nInvalid number of arguments\n"), 1);
 	game = init();
 	get_elements(game, av[1]);
-	if (check_necessary_map_components(game))
-		printf("valid map\n");
-	else
-		printf("invalid map\n");
+	if (!check_necessary_map_components(game))
+		return(printf("Error\nInvalid map\n"), ft_exit(game, NULL), 1);
 	init_textures(game);
-	//free_matrix(map);
 	game_loop(game);
-	// mlx_loop(game->mlx_ptr);
 	return (0);
 }

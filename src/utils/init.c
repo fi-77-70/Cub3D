@@ -23,6 +23,7 @@ void	init_game(t_game *game)
 	game->rotate_right = 0;
 	game->map_height = 0;
 	game->map_width = 0;
+	game->player_count = 0;
 }
 
 void	init_img(t_game *game)
@@ -56,17 +57,6 @@ void	init_ray(t_ray *ray, t_game *game)
 	ray->side_dist_y = 0;
 	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
 	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
-	// printf("ray->camera_x: %f\n", ray->camera_x);
-	// printf("game->player_dir_x: %f\n", game->player_dir_x);
-	// printf("game->player_dir_y: %f\n", game->player_dir_y);
-	// printf("game->plane_x: %f\n", game->plane_x);
-	// printf("game->plane_y: %f\n", game->plane_y);
-	// printf("ray->delta_dist_x: %f\n", ray->delta_dist_x);
-	// printf("ray->delta_dist_y: %f\n", ray->delta_dist_y);
-	// printf("game->player.x: %f\n", game->player.x);
-	// printf("game->player.y: %f\n", game->player.y);
-	// printf("ray->ray_dir_x: %f\n", ray->ray_dir_x);
-	// printf("ray->ray_dir_y: %f\n", ray->ray_dir_y);
 	ray->perp_wall_dist = 0;
 	ray->hit = 0;
 	ray->wall_x = 0;

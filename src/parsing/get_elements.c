@@ -31,13 +31,13 @@ void	get_texture(t_game *game, char **content)
 		while (content[i][++j])
 		{
 			if (content[i][j] == 'N' && (content[i][j + 1] && content[i][j + 1] == 'O') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->no = get_texture_path(content[i] + j + 3);
+				game->no = get_texture_path(content[i] + j + 3, game);
 			if (content[i][j] == 'S' && (content[i][j + 1] && content[i][j + 1] == 'O') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->so = get_texture_path(content[i] + j + 3);
+				game->so = get_texture_path(content[i] + j + 3, game);
 			if (content[i][j] == 'W' && (content[i][j + 1] && content[i][j + 1] == 'E') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->we = get_texture_path(content[i] + j + 3);
+				game->we = get_texture_path(content[i] + j + 3, game);
 			if (content[i][j] == 'E' && (content[i][j + 1] && content[i][j + 1] == 'A') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->ea = get_texture_path(content[i] + j + 3);
+				game->ea = get_texture_path(content[i] + j + 3, game);
 		}
 		j = -1;
 	}
@@ -55,9 +55,11 @@ void	get_rgb(t_game *game, char **content)
 		while (content[i][++j])
 		{
 			if (content[i][j] == 'F' && (content[i][j + 1] && content[i][j + 1] == ' '))
-				get_rgb_values(game, content[i] + j + 2, true);
+				if (!get_rgb_values(game, content[i] + j + 2, true))
+					ft_exit(game, content);
 			if (content[i][j] == 'C' && (content[i][j + 1] && content[i][j + 1] == ' '))
-				get_rgb_values(game, content[i] + j + 2, false);
+				if (!get_rgb_values(game, content[i] + j + 2, false))
+					ft_exit(game, content);
 		}
 		j = -1;
 	}
@@ -104,7 +106,10 @@ void	get_elements(t_game *game, char *path)
 	content = NULL;
 	content = get_file_content(path);
 	get_texture(game, content);
+	if (!image_validator(game, "xpm"))
+		ft_exit(game, content);
 	get_rgb(game, content);
 	get_map(game, content);
+	check_char(game);
 	check_img_files(game);
 }

@@ -20,25 +20,26 @@ int	extension_validator(char *name, char *extension)
 	while (i >= 0 && j >= 0 && name[i] && extension[j])
 	{
 		if (name[i] != extension[j])
-			return (printf("Ivalid file extension\n"), 0);
+			return (printf("Invalid file extension\n"), 0);
 		i--;
 		j--;
 		if (j == -1 && name[i] == '.')
 			return (1);
 	}
-	return (printf("Ivalid file extension\n"), 0);
+	return (printf("Invalid file extension\n"), 0);
 }
 
-int	image_validator(char *file, char *extension)
+int	image_validator(t_game *game, char *extension)
 {
-	if (!file || !extension || !file[0] || !extension[0])
+	if (game->no && !extension_validator(game->no, extension))
 		return (0);
-	if (!extension_validator(file, extension))
+	if (game->so && !extension_validator(game->so, extension))
 		return (0);
-	if (open(file, O_RDONLY) < 0)
+	if (game->we && !extension_validator(game->we, extension))
 		return (0);
-	else
-		return (1);
+	if (game->ea && !extension_validator(game->ea, extension))
+		return (0);
+	return (1);
 }
 
 int	check_flood(char **map)
