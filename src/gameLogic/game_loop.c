@@ -4,6 +4,9 @@ void my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
+	if (y < 0 || y > 945 - 1 || x < 0
+		|| x > 1920 - 1)
+		return ;
 	dst = img->addr + (y * img->llen + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
 }
@@ -16,38 +19,49 @@ int	get_color(t_game *game, int x, int y, int i)
 
 void draw_line(t_game *game, t_img *frame, t_ray *ray)
 {
-    int		y;
     int		line_height;
     int		draw_start;
     int		draw_end;
     int		color;
 
-	(void)game;
+	line_height = 0;
+	draw_start = 0;
+	draw_end = 0;
+	color = 0;
     // Calculate line height based on perpendicular wall distance
-    line_height = (int)(600 / ray->perp_wall_dist);
+    line_height = (int)(945 / ray->perp_wall_dist);
+	//ft_printf("line_height: %d\n", line_height);
+	//ft_printf("ray->perp_wall_dist: %f\n", ray->perp_wall_dist);
     // Calculate lowest and highest pixel to fill in current stripe
-    draw_start = -line_height / 2 + 600 / 2;
+    draw_start = -line_height / 2 + (945 / 2);
     if (draw_start < 0)
         draw_start = 0;
-    draw_end = line_height / 2 + 600 / 2;
-    if (draw_end >= 600)
-	{
-        draw_end = 600 - 1;
-	}
+    draw_end = line_height / 2 + 945 / 2;
+    if (draw_end >= 945)
+		draw_end = 945 - 1;
     // Draw the vertical line
-    y = draw_start;
-    while (y < draw_end)
+	ray->wall_x -= floor(ray->perp_wall_dist);
+	ray->tex_x = ray->wall_x * 64;
+	if (ray->side == 0 && ray->ray_dir_x > 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
+	if (ray->side == 1 && ray->ray_dir_y < 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
+	ray->step = 64.0 / 945.0;
+	ray->tex_pos = (draw_start - 945 / 2 + line_height / 2) * ray->step;
+    while (draw_start < draw_end)
     {
+		ray->tex_y = ray->tex_pos;
+		ray->tex_pos += ray->step;
         if (ray->side == 0 && ray->ray_dir_x > 0)
-            color = get_color(game, ray->x, y, NORTH);
+            color = get_color(game, ray->tex_x, ray->tex_y, NORTH);
         else if (ray->side == 1 && ray->ray_dir_y < 0)
-            color = get_color(game, ray->x, y, SOUTH);
+            color = get_color(game, ray->tex_x, ray->tex_y, SOUTH);
 		else if (ray->side == 0 && ray->ray_dir_x < 0)
-			color = get_color(game, ray->x, y, EAST);
+			color = get_color(game, ray->tex_x, ray->tex_y, EAST);
 		else
-			color = get_color(game, ray->x, y, WEST);
-        my_mlx_pixel_put(frame, ray->x, y, color);
-        y++;
+			color = get_color(game, ray->tex_x, ray->tex_y, WEST);
+        my_mlx_pixel_put(frame, ray->x, draw_start, color);
+        draw_start++;
     }
 }
 void rotate_player(t_game *game, double angle)
@@ -70,18 +84,9 @@ int	raycast(t_game *game)
 	ray = malloc(sizeof(t_ray));
 	ray->x = 0;
 	put_floor_ceiling(game);
-    while (ray->x < 800)
+    while (ray->x < 1920)
     {
-        ray->camera_x = 2 * ray->x / 800.0 - 1;
-        ray->ray_dir_x = game->player_dir_x + game->plane_x * ray->camera_x;
-        ray->ray_dir_y = game->player_dir_y + game->plane_y * ray->camera_x;
-        ray->map_x = (int)game->player.x;
-        ray->map_y = (int)game->player.y;
-        ray->side_dist_x = 0;
-        ray->side_dist_y = 0;
-        ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-        ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
-        ray->hit = 0;
+        init_ray(ray, game);
         if (ray->ray_dir_x < 0)
         {
             ray->step_x = -1;
@@ -127,13 +132,23 @@ int	raycast(t_game *game)
             {
                 ray->hit = 1; // Stop the loop if out of bounds
             }
+			if (ray->side == 0)
+				ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+			else
+				ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
         }
-        if (ray->side == 0)
-            ray->perp_wall_dist = (ray->map_x - game->player.x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
-        else
-            ray->perp_wall_dist = (ray->map_y - game->player.y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
         // Draw the line for the current stripe
-        draw_line(game, &game->bg, ray);
+		if (ray->side == 0)
+			ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+		else
+			ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+        ft_printf("ray->perp_wall_dist: %f\n", ray->perp_wall_dist);
+	    ft_printf("ray->side: %d\n", ray->side);
+		ft_printf("ray->delta_dist_x: %d\n", ray->delta_dist_x);
+		ft_printf("ray->side_dist_x: %d\n", ray->side_dist_x);
+		ft_printf("ray->side_dist_y: %d\n", ray->side_dist_y);
+		ft_printf("ray->delta_dist_y: %d\n", ray->delta_dist_y);
+	    draw_line(game, &game->bg, ray);
         ray->x += 1;
     }
 	free(ray);

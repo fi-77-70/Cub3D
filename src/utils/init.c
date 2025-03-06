@@ -28,9 +28,9 @@ void	init_game(t_game *game)
 void	init_img(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
-	game->bg.img = mlx_new_image(game->mlx_ptr, 800, 600);
+	game->bg.img = mlx_new_image(game->mlx_ptr, 1920, 945);
 	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, 800, 600, "cub3d");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, 1920, 945, "cub3d");
 }
 
 t_game	*init(void)
@@ -43,4 +43,25 @@ t_game	*init(void)
 	init_game(game);
 	init_img(game);
 	return (game);
+}
+
+void	init_ray(t_ray *ray, t_game *game)
+{
+	ray->camera_x = 2 * ray->x / 1920.0 - 1;
+	ray->ray_dir_x = game->player_dir_x + game->plane_x * ray->camera_x;
+	ray->ray_dir_y = game->player_dir_y + game->plane_y * ray->camera_x;
+	ray->map_x = (int)game->player.x;
+	ray->map_y = (int)game->player.y;
+	ray->side_dist_x = 0;
+	ray->side_dist_y = 0;
+	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	ray->perp_wall_dist = 0;
+	ray->hit = 0;
+	ray->wall_x = 0;
+	ray->wall_y = 0;
+	ray->tex_x = 0;
+	ray->tex_y = 0;
+	ray->step = 0;
+	ray->tex_pos = 0;
 }

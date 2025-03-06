@@ -76,6 +76,12 @@ typedef struct s_ray
 	double	delta_dist_x;
 	double	delta_dist_y;
 	double	perp_wall_dist;
+	double	wall_x;
+	double	wall_y;
+	double	tex_x;
+	double	tex_y;
+	double	step;
+	double	tex_pos;
 	int		step_x;
 	int		step_y;
 	int		hit;
@@ -88,6 +94,7 @@ t_game	*init(void);
 
 void	init_img(t_game *game);
 void	init_textures(t_game *game);
+void	init_ray(t_ray *ray, t_game *game);
 
 void	get_elements(t_game *game, char *path);
 

@@ -5,7 +5,7 @@
 CC				= cc -g
 RM				= rm -rf
 CFLAGS			= -Wall -Wextra -Werror
-NAME			= cub3d
+NAME			= cub3D
 
 INC				= -I./include
 LIBFT			= libs/libft/libft.a
