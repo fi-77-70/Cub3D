@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_elements.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 14:08:04 by ptorrao-          #+#    #+#             */
+/*   Updated: 2025/03/10 14:22:35 by ptorrao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-char **get_file_content(char *path)
+char	**get_file_content(char *path)
 {
 	int		fd;
 	char	**content;
@@ -29,16 +41,7 @@ void	get_texture(t_game *game, char **content)
 	while (content[++i])
 	{
 		while (content[i][++j])
-		{
-			if (content[i][j] == 'N' && (content[i][j + 1] && content[i][j + 1] == 'O') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->no = get_texture_path(content[i] + j + 3, game);
-			if (content[i][j] == 'S' && (content[i][j + 1] && content[i][j + 1] == 'O') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->so = get_texture_path(content[i] + j + 3, game);
-			if (content[i][j] == 'W' && (content[i][j + 1] && content[i][j + 1] == 'E') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->we = get_texture_path(content[i] + j + 3, game);
-			if (content[i][j] == 'E' && (content[i][j + 1] && content[i][j + 1] == 'A') && (content[i][j + 2] && content[i][j + 2] == ' '))
-				game->ea = get_texture_path(content[i] + j + 3, game);
-		}
+			get_texture_utils(game, content, i, j);
 		j = -1;
 	}
 }
@@ -54,10 +57,12 @@ void	get_rgb(t_game *game, char **content)
 	{
 		while (content[i][++j])
 		{
-			if (content[i][j] == 'F' && (content[i][j + 1] && content[i][j + 1] == ' '))
+			if (content[i][j] == 'F' && (content[i][j + 1]
+				&& content[i][j + 1] == ' '))
 				if (!get_rgb_values(game, content[i] + j + 2, true))
 					ft_exit(game, content);
-			if (content[i][j] == 'C' && (content[i][j + 1] && content[i][j + 1] == ' '))
+			if (content[i][j] == 'C' && (content[i][j + 1]
+				&& content[i][j + 1] == ' '))
 				if (!get_rgb_values(game, content[i] + j + 2, false))
 					ft_exit(game, content);
 		}
@@ -76,7 +81,8 @@ void	get_map(t_game *game, char **content)
 	{
 		while (content[i][++j])
 		{
-			if (content[i][j] != '1' && content[i][j] != '0' && content[i][j] != ' ')
+			if (content[i][j] != '1' && content[i][j] != '0'
+				&& content[i][j] != ' ')
 				break ;
 			if (content[i][j] == '1' || content[i][j] == '0')
 			{

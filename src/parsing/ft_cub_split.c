@@ -6,7 +6,7 @@
 /*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:58:10 by ptorrao-          #+#    #+#             */
-/*   Updated: 2025/02/25 18:59:09 by ptorrao-         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:14:30 by ptorrao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_words(char const *s, char c, char x)
 			i = 1;
 			c_words++;
 		}
-		else if (*s == c  || *s == x)
+		else if (*s == c || *s == x)
 			i = 0;
 		s++;
 	}
@@ -64,7 +64,7 @@ char	**ft_free(char **str, int j)
 	return (NULL);
 }
 
-char	**ft_makesplit(char const *s, char c, char x,char **lst_str)
+char	**ft_makesplit(char const *s, char c, char x, char **lst_str)
 {
 	size_t	i;
 	int		j;
