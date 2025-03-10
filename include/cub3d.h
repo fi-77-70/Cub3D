@@ -96,19 +96,31 @@ typedef struct s_ray
 
 t_game	*init(void);
 
+//function initializes the img struct from minilibx wich will be used to build the frames displayed in the game it also initializes the window
 void	init_img(t_game *game);
+
+//this function initializes the textures by checking if tey exist and can be accessed and loading them in the minilibx img struct
 void	init_textures(t_game *game);
+
+//function initializes the ray strcut wich will be used to calculate the rays that will be casted in the game
 void	init_ray(t_ray *ray, t_game *game);
 
+//function gets elements from the file wich declares the map and textures and stores them in the game struct
 void	get_elements(t_game *game, char *path);
+
+//function validates if the map is composed only of valid charactes
 int		check_char(t_game *game);
 
+//function gets the path to the texture from the line
 char	*get_texture_path(char *line, t_game *game);
 
+//this function gets the rgb values from the line and stores them in the game struct
 int		get_rgb_values(t_game *game, char *line, bool x);
 
+//helper funtion to get the map from the game file
 void	get_map_utils(t_game *game, char **content, int i);
 
+//funtion splits the file content based on the especific content to store it in the struct for better processing
 char	**ft_cub_split(char const *s, char c, char x);
 
 /*function takes two strings, name (the name of the file) and extension (the desired extension);
@@ -125,19 +137,28 @@ int		map_scan(char **map);
 /*function takes an array, gets it's longest line and fills all the other lines with spaces to match that length forming a rectangle*/
 char	**map_formater(char **map);
 
+//function splits the game frame in two and paints to colors wich will give the illusion of floor and ceiling
 void	put_floor_ceiling(t_game *game);
 
+//checks if the map has all the necessary components to be valid
 int		check_necessary_map_components(t_game *game);
 
+//initializes the game loop functions from minilibx that make the game run
 int		game_loop(t_game *game);
 
+//function takes an array and returns the longest line length as an int
 int		get_arr_longest_line(char **arr);
 
+//funtcion frees all the alocated memory and exits the game cleanly
 int		ft_exit(t_game *game, char **content);
+
+//function closes the game and frees the necessary memory if player closes the game
 int		close_game(t_game *game);
 
+//function dysplays an error msg if the game img files are missing or cant be accessed
 void	missing_img_file(t_game *game);
 
+// function checks if the necessary files stored in the game struct exist and can be read
 void	check_img_files(t_game *game);
 
 
