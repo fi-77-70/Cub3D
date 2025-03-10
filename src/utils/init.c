@@ -12,7 +12,7 @@ void	init_game(t_game *game)
 	game->player.x = -1;
 	game->player.y = -1;
 	game->player_dir_x = 0;
-	game->player_dir_y = -1;
+	game->player_dir_y = 0;
 	game->plane_x = 1;
 	game->plane_y = 0;
 	game->move_forward = 0;
