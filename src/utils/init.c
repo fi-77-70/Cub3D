@@ -1,4 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 14:08:36 by ptorrao-          #+#    #+#             */
+/*   Updated: 2025/03/10 15:06:42 by ptorrao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
+
+t_p_line	init_p_line(void)
+{
+	t_p_line	p_line;
+
+	p_line.line_height = 0;
+	p_line.draw_start = 0;
+	p_line.draw_end = 0;
+	p_line.color = 0;
+	return (p_line);
+}
 
 void	init_game(t_game *game)
 {
@@ -30,7 +53,8 @@ void	init_img(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	game->bg.img = mlx_new_image(game->mlx_ptr, S_WIDTH, S_HEIGHT);
-	game->bg.addr = mlx_get_data_addr(game->bg.img, &game->bg.bpp, &game->bg.llen, &game->bg.endian);
+	game->bg.addr = mlx_get_data_addr(game->bg.img,
+			&game->bg.bpp, &game->bg.llen, &game->bg.endian);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, S_WIDTH, S_HEIGHT, "cub3d");
 }
 

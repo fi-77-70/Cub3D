@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   formating_tools.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 14:07:52 by ptorrao-          #+#    #+#             */
+/*   Updated: 2025/03/10 14:15:11 by ptorrao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	get_arr_longest_line(char **arr)
@@ -76,7 +88,8 @@ int	charcter_checker_map(char **map)
 	{
 		while (map[y][x])
 		{
-			if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != '\n' && map[y][x] != 'N'
+			if (map[y][x] != '1' && map[y][x] != '0'
+					&& map[y][x] != '\n' && map[y][x] != 'N'
 					&& map[y][x] != 'S' && map[y][x] != 'E'
 						&& map[y][x] != 'W' && map[y][x] != ' ')
 				return (0);
@@ -105,7 +118,8 @@ int	check_necessary_map_components(t_game *game)
 	{
 		while (game->map[y][x])
 		{
-			if (game->map[y][x] == 'N' || game->map[y][x] == 'S' || game->map[y][x] == 'E'
+			if (game->map[y][x] == 'N' || game->map[y][x] == 'S'
+					|| game->map[y][x] == 'E'
 					|| game->map[y][x] == 'W')
 				return (game->player.x = x, game->player.y = y, 1);
 			x++;

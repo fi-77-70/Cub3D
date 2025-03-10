@@ -15,14 +15,15 @@ MLX				= minilibx-linux/libmlx_Linux.a
 
 GENERAL			= main.c
 
-UTILS			= init.c get_content_utils.c formating_tools.c free.c
+UTILS			= init.c get_content_utils.c formating_tools.c free.c \
+					get_content_utils_2.c \
 
 PARSING			= get_elements.c parsing_utils.c ft_cub_split.c \
 					validate_img.c
 
 GRAPHICS		= image_buffering.c render.c
 
-GAME			= game_loop.c
+GAME			= game_loop.c game_loop_utils.c game_loop_utils_2.c
 
 ERROR			= error.c
 

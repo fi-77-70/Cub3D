@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 14:07:12 by ptorrao-          #+#    #+#             */
+/*   Updated: 2025/03/10 15:08:21 by ptorrao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -36,6 +48,14 @@ typedef struct s_coord
 	double	x;
 	double	y;
 }	t_coord;
+
+typedef struct s_p_line
+{
+	int	line_height;
+	int	draw_start;
+	int	draw_end;
+	int	color;
+}	t_p_line;
 
 typedef struct s_game
 {
@@ -94,52 +114,67 @@ typedef struct s_ray
 	int		map_y;
 }	t_ray;
 
-t_game	*init(void);
+t_game		*init(void);
 
-void	init_img(t_game *game);
-void	init_textures(t_game *game);
-void	init_ray(t_ray *ray, t_game *game);
+void		init_img(t_game *game);
+void		init_textures(t_game *game);
+void		init_ray(t_ray *ray, t_game *game);
+t_p_line	init_p_line(void);
 
-void	get_elements(t_game *game, char *path);
-int		check_char(t_game *game);
+void		get_elements(t_game *game, char *path);
+int			check_char(t_game *game);
 
-char	*get_texture_path(char *line, t_game *game);
+char		*get_texture_path(char *line, t_game *game);
+void		get_texture_utils(t_game *game, char **content, int i, int j);
 
-int		get_rgb_values(t_game *game, char *line, bool x);
+int			get_rgb_values(t_game *game, char *line, bool x);
 
-void	get_map_utils(t_game *game, char **content, int i);
+void		get_map_utils(t_game *game, char **content, int i);
 
-char	**ft_cub_split(char const *s, char c, char x);
+char		**ft_cub_split(char const *s, char c, char x);
 
-/*function takes two strings, name (the name of the file) and extension (the desired extension);
-it then checks if the file extension the the one given in the second parameter */
-int		extension_validator(char *name, char *extension);
+/*function takes two strings, name (the name of the file)
+and extension (the desired extension);
+it then checks if the file extension the
+the one given in the second parameter */
+int			extension_validator(char *name, char *extension);
 
-//function takes the name of a file (in this case an image) and the desiered extension and checks if it exists and can be acessed
-int		image_validator(t_game *game, char *extension);
+/* function takes the name of a file (in this case an image) and
+	the desiered extension and checks if it exists and can be acessed */
+int			image_validator(t_game *game, char *extension);
 
-/*this function checks if the given array (wich represents a map) is surrounded by walls (represented by a '1')
+/*this function checks if the given array (wich represents a map)
+is surrounded by walls (represented by a '1')
 returns 0 if the map is not surrounded and 1 if it is */
-int		map_scan(char **map);
+int			map_scan(char **map);
 
-/*function takes an array, gets it's longest line and fills all the other lines with spaces to match that length forming a rectangle*/
-char	**map_formater(char **map);
+/*function takes an array, gets it's longest line and fills all the other
+lines with spaces to match that length forming a rectangle*/
+char		**map_formater(char **map);
 
-void	put_floor_ceiling(t_game *game);
+void		put_floor_ceiling(t_game *game);
 
-int		check_necessary_map_components(t_game *game);
+int			check_necessary_map_components(t_game *game);
 
-int		game_loop(t_game *game);
+int			game_loop(t_game *game);
+int			raycast(t_game *game);
+int			movements(t_game *game);
+int			function_caller(t_game *game);
+int			key_hook_press(int keycode, t_game *game);
+int			key_hook_release(int keycode, t_game *game);
+int			get_color(t_game *game, int x, int y, int i);
+void		draw_line(t_game *game, t_img *frame, t_ray *ray);
+void		rotate_player(t_game *game, double angle);
+void		my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void		draw_line_utils(t_game *game, t_ray *ray, t_p_line *p_line);
 
-int		get_arr_longest_line(char **arr);
+int			get_arr_longest_line(char **arr);
 
-int		ft_exit(t_game *game, char **content);
-int		close_game(t_game *game);
+int			ft_exit(t_game *game, char **content);
+int			close_game(t_game *game);
 
-void	missing_img_file(t_game *game);
+void		missing_img_file(t_game *game);
 
-void	check_img_files(t_game *game);
-
-
+void		check_img_files(t_game *game);
 
 #endif
