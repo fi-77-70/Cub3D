@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: filferna <filferna@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:08:41 by ptorrao-          #+#    #+#             */
-/*   Updated: 2025/03/10 14:13:44 by ptorrao-         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:38:24 by filferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_player_vector_2(t_game *game)
 		game->player_dir_x = -1;
 		game->player_dir_y = 0;
 		game->plane_x = 0;
-		game->plane_y = 1;
+		game->plane_y = -1;
 	}
 }
 
@@ -43,7 +43,7 @@ void	init_player_vector(t_game *game)
 	{
 		game->player_dir_x = 0;
 		game->player_dir_y = 1;
-		game->plane_x = 1;
+		game->plane_x = -1;
 		game->plane_y = 0;
 	}
 	init_player_vector_2(game);
