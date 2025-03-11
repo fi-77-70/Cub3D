@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: filferna <filferna@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:07:12 by ptorrao-          #+#    #+#             */
-/*   Updated: 2025/03/10 15:48:23 by ptorrao-         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:42:28 by filferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define EAST 2
 # define WEST 3
 
-# define S_WIDTH 1920
-# define S_HEIGHT 945
+# define S_WIDTH 800
+# define S_HEIGHT 600
 
 typedef struct s_img
 {

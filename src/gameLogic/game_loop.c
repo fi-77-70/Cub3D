@@ -80,8 +80,8 @@ void	raycast_utils_2(t_game *game, t_ray *ray)
 		ray->map_y += ray->step_y;
 		ray->side = 1;
 	}
-	if (ray->map_x >= 0 && ray->map_x < 37
-		&& ray->map_y >= 0 && ray->map_y < 39)
+	if (ray->map_x >= 0 && ray->map_x < game->map_width
+		&& ray->map_y >= 0 && ray->map_y < game->map_height)
 	{
 		if (game->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
