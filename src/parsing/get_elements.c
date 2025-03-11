@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorrao- <ptorrao-@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: filferna <filferna@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:08:04 by ptorrao-          #+#    #+#             */
-/*   Updated: 2025/03/10 14:22:35 by ptorrao-         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:36:37 by filferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**get_file_content(char *path)
+char	**get_file_content(char *path, t_game *game)
 {
 	int		fd;
 	char	**content;
@@ -23,6 +23,7 @@ char	**get_file_content(char *path)
 	if (fd < 0)
 	{
 		ft_printf("Error\nFile not found\n");
+		ft_exit(game, NULL);
 		exit(1);
 	}
 	i = 0;
@@ -110,7 +111,7 @@ void	get_elements(t_game *game, char *path)
 		exit(1);
 	}
 	content = NULL;
-	content = get_file_content(path);
+	content = get_file_content(path, game);
 	get_texture(game, content);
 	if (!image_validator(game, "xpm"))
 		ft_exit(game, content);
